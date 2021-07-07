@@ -1,7 +1,9 @@
 #pragma once
+#include <charconv>
+#include "simpleini/SimpleIni.h"
 
 template <class T>
-bool ini_read_numeric(CSimpleIniA& ini, const char* section, const char* key, T& out)
+inline bool ini_read_numeric(CSimpleIniA& ini, const char* section, const char* key, T& out)
 {
     static_assert(std::is_integral<T>() || std::is_floating_point<T>(), "Invalid type");
 
@@ -22,7 +24,7 @@ bool ini_read_numeric(CSimpleIniA& ini, const char* section, const char* key, T&
     return false;
 }
 
-bool ini_read_bool(CSimpleIniA& ini, const char* section, const char* key, bool& out)
+inline bool ini_read_bool(CSimpleIniA& ini, const char* section, const char* key, bool& out)
 {
     auto result = false;
     auto value = ini.GetValue(section, key);

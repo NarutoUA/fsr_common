@@ -1,7 +1,7 @@
 #pragma once
 
 template<unsigned int N>
-HRESULT CreateComputeShader(ID3D11Device* pDevice, const unsigned char(&pByteCode)[N], ID3D11ComputeShader** ppShaderOut)
+inline HRESULT CreateComputeShader(ID3D11Device* pDevice, const unsigned char(&pByteCode)[N], ID3D11ComputeShader** ppShaderOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -10,7 +10,7 @@ HRESULT CreateComputeShader(ID3D11Device* pDevice, const unsigned char(&pByteCod
 }
 
 template <class T>
-HRESULT CreateConstantBuffer(ID3D11Device* pDevice, const T* pInitData, ID3D11Buffer** ppBufOut)
+inline HRESULT CreateConstantBuffer(ID3D11Device* pDevice, const T* pInitData, ID3D11Buffer** ppBufOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -34,7 +34,7 @@ HRESULT CreateConstantBuffer(ID3D11Device* pDevice, const T* pInitData, ID3D11Bu
     return pDevice->CreateBuffer(&desc, &InitData, ppBufOut);
 }
 
-HRESULT CreateTextureSRV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D11ShaderResourceView** ppSRVOut)
+inline HRESULT CreateTextureSRV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D11ShaderResourceView** ppSRVOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -53,7 +53,7 @@ HRESULT CreateTextureSRV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D1
     return pDevice->CreateShaderResourceView(pTexture, &desc, ppSRVOut);
 }
 
-HRESULT CreateTextureUAV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D11UnorderedAccessView** ppUAVOut)
+inline HRESULT CreateTextureUAV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D11UnorderedAccessView** ppUAVOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -71,7 +71,7 @@ HRESULT CreateTextureUAV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D1
     return pDevice->CreateUnorderedAccessView(pTexture, &desc, ppUAVOut);
 }
 
-HRESULT CreateTextureRTV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D11RenderTargetView** ppRTVOut)
+inline HRESULT CreateTextureRTV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D11RenderTargetView** ppRTVOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -89,7 +89,7 @@ HRESULT CreateTextureRTV(ID3D11Device* pDevice, ID3D11Texture2D* pTexture, ID3D1
     return pDevice->CreateRenderTargetView(pTexture, &desc, ppRTVOut);
 }
 
-HRESULT CreateSampler(ID3D11Device* pDevice, ID3D11SamplerState** ppSamplerOut)
+inline HRESULT CreateSampler(ID3D11Device* pDevice, ID3D11SamplerState** ppSamplerOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -107,7 +107,7 @@ HRESULT CreateSampler(ID3D11Device* pDevice, ID3D11SamplerState** ppSamplerOut)
     return pDevice->CreateSamplerState(&SamplerDesc, ppSamplerOut);
 }
 
-HRESULT CreateDestinationTexture(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC& desc, ID3D11Texture2D** ppTextureOut)
+inline HRESULT CreateDestinationTexture(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC& desc, ID3D11Texture2D** ppTextureOut)
 {
     if (pDevice == nullptr)
         return E_FAIL;
@@ -129,7 +129,7 @@ HRESULT CreateDestinationTexture(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DE
     return pDevice->CreateTexture2D(&TextureDesc, nullptr, ppTextureOut);
 }
 
-HRESULT RunComputeShader(ID3D11DeviceContext* pDeviceContext, ID3D11ComputeShader* pCS, ID3D11ShaderResourceView* pSRV, ID3D11Buffer* pCBCS, ID3D11UnorderedAccessView* pUAV, ID3D11SamplerState* pSampler, UINT X, UINT Y, UINT Z)
+inline HRESULT RunComputeShader(ID3D11DeviceContext* pDeviceContext, ID3D11ComputeShader* pCS, ID3D11ShaderResourceView* pSRV, ID3D11Buffer* pCBCS, ID3D11UnorderedAccessView* pUAV, ID3D11SamplerState* pSampler, UINT X, UINT Y, UINT Z)
 {
     if (pDeviceContext == nullptr)
         return E_FAIL;
@@ -165,7 +165,7 @@ HRESULT RunComputeShader(ID3D11DeviceContext* pDeviceContext, ID3D11ComputeShade
 }
 
 template <class T>
-std::unique_ptr<T> ReadConstantBuffer(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, ID3D11Buffer* pBuffer)
+inline std::unique_ptr<T> ReadConstantBuffer(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, ID3D11Buffer* pBuffer)
 {
     if (pDevice == nullptr || pDeviceContext == nullptr || pBuffer == nullptr)
         return nullptr;

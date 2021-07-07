@@ -3,7 +3,7 @@
 extern bool g_bPrintDebug;
 
 template <std::size_t N, class ...Args>
-void print_debug(const char(&format)[N], Args... args)
+inline void print_debug(const char(&format)[N], Args... args)
 {
     // this is still unsafe but who cares
     static_assert(sizeof...(args) == 0 || N < 128, "Format string is too long");
@@ -24,7 +24,7 @@ void print_debug(const char(&format)[N], Args... args)
 }
 
 template <std::size_t N, class ...Args>
-bool print_debug_timeout(ULONGLONG& tick, const ULONGLONG timeout, const char(&format)[N], Args... args)
+inline bool print_debug_timeout(ULONGLONG& tick, const ULONGLONG timeout, const char(&format)[N], Args... args)
 {
     if (g_bPrintDebug == false)
         return false;
