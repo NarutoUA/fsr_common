@@ -14,7 +14,7 @@ bool ini_read_numeric(CSimpleIniA& ini, const char* section, const char* key, T&
         {
             out = num;
             char debug_buf[128] = { 0 };
-            sprintf_s(debug_buf, "GTA5_FSR: %s: %f", key, static_cast<float>(num));
+            sprintf_s(debug_buf, FSR_COMMON_LOG_PREFIX "%s: %f", key, static_cast<float>(num));
             OutputDebugStringA(debug_buf);
             return true;
         }
@@ -42,7 +42,7 @@ bool ini_read_bool(CSimpleIniA& ini, const char* section, const char* key, bool&
         if (result)
         {
             char debug_buf[128] = { 0 };
-            sprintf_s(debug_buf, "GTA5_FSR: %s is %d", key, out);
+            sprintf_s(debug_buf, FSR_COMMON_LOG_PREFIX "%s is %d", key, out);
             OutputDebugStringA(debug_buf);
         }
     }
