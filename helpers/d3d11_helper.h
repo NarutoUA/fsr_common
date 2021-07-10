@@ -1,5 +1,49 @@
 #pragma once
 
+#include <d3d11.h>
+
+struct d3d11_exports_t
+{
+    HRESULT(__stdcall* D3D11CreateDevice)(
+        _In_opt_ IDXGIAdapter* pAdapter,
+        D3D_DRIVER_TYPE DriverType,
+        HMODULE Software,
+        UINT Flags,
+        _In_reads_opt_(FeatureLevels) CONST D3D_FEATURE_LEVEL* pFeatureLevels,
+        UINT FeatureLevels,
+        UINT SDKVersion,
+        _COM_Outptr_opt_ ID3D11Device** ppDevice,
+        _Out_opt_ D3D_FEATURE_LEVEL* pFeatureLevel,
+        _COM_Outptr_opt_ ID3D11DeviceContext** ppImmediateContext) = nullptr;
+
+    HRESULT (__stdcall *D3D11CreateDeviceAndSwapChain)(
+        _In_opt_ IDXGIAdapter* pAdapter,
+        D3D_DRIVER_TYPE DriverType,
+        HMODULE Software,
+        UINT Flags,
+        _In_reads_opt_(FeatureLevels) CONST D3D_FEATURE_LEVEL* pFeatureLevels,
+        UINT FeatureLevels,
+        UINT SDKVersion,
+        _In_opt_ CONST DXGI_SWAP_CHAIN_DESC* pSwapChainDesc,
+        _COM_Outptr_opt_ IDXGISwapChain** ppSwapChain,
+        _COM_Outptr_opt_ ID3D11Device** ppDevice,
+        _Out_opt_ D3D_FEATURE_LEVEL* pFeatureLevel,
+        _COM_Outptr_opt_ ID3D11DeviceContext** ppImmediateContext) = nullptr;
+};
+
+inline bool ReadD3D11Exports(HMODULE hModule, d3d11_exports_t& exports)
+{
+    if (hModule != nullptr)
+    {
+        exports.D3D11CreateDevice = reinterpret_cast<decltype(exports.D3D11CreateDevice)>(GetProcAddress(hModule, "D3D11CreateDevice"));
+        exports.D3D11CreateDeviceAndSwapChain = reinterpret_cast<decltype(exports.D3D11CreateDeviceAndSwapChain)>(GetProcAddress(hModule, "D3D11CreateDeviceAndSwapChain"));
+
+        return true;
+    }
+
+    return false;
+}
+
 template<unsigned int N>
 inline HRESULT CreateComputeShader(ID3D11Device* pDevice, const unsigned char(&pByteCode)[N], ID3D11ComputeShader** ppShaderOut)
 {

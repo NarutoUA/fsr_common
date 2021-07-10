@@ -50,3 +50,19 @@ inline bool ini_read_bool(CSimpleIniA& ini, const char* section, const char* key
     }
     return result;
 }
+
+inline bool ini_read_string(CSimpleIniA& ini, const char* section, const char* key, std::string& out)
+{
+    auto result = false;
+    auto value = ini.GetValue(section, key);
+    if (value)
+    {
+        out = value;
+
+        char debug_buf[256] = { 0 };
+        sprintf_s(debug_buf, FSR_COMMON_LOG_PREFIX "%s: %s", key, value);
+        OutputDebugStringA(debug_buf);
+        return true;
+    }
+    return false;
+}
